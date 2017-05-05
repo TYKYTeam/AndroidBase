@@ -29,5 +29,6 @@ public class AppConfig extends Application{
         }
 
         ToastUtils.init(this);
+
     }
 }
