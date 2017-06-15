@@ -7,6 +7,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.drawable.Drawable;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -659,5 +661,19 @@ public class AppUtils {
             isSuccess &= CleanUtils.cleanCustomCache(dir);
         }
         return isSuccess;
+    }
+    /*
+    * 清除app cookie
+    * */
+    public static void removeCookie(Context context) {
+
+        CookieSyncManager.createInstance(context);
+
+        CookieManager cookieManager = CookieManager.getInstance();
+
+        cookieManager.removeAllCookie();
+
+        CookieSyncManager.getInstance().sync();
+
     }
 }
