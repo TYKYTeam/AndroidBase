@@ -112,6 +112,8 @@ public abstract class BaseRecyclerAdapter<T> extends BaseQuickAdapter<T, Binding
             if (pageNo == 1) {
                 setNewData(null);
                 showNoDataView();
+            } else {
+                loadMoreEnd();
             }
             return;
         }
