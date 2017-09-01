@@ -27,7 +27,7 @@ public abstract class BaseRecyclerViewActivity<T> extends BaseAppCompatActivity 
     protected SwipeRefreshLayout swipeRefresh;
     protected RecyclerView recyclerView;
     private BaseRecyclerViewContract.Presenter recyclerPresenter;
-
+    protected LinearLayoutManager mLinearLayoutManager;
     @Override
     public void initRecyclerView() {
         recyclerPresenter = new BaseRecyclerViewPresenter(this,
@@ -40,8 +40,8 @@ public abstract class BaseRecyclerViewActivity<T> extends BaseAppCompatActivity 
 
         swipeRefresh.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW);
         swipeRefresh.setOnRefreshListener(this);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLinearLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
         adapter.setOnLoadMoreListener(this);
