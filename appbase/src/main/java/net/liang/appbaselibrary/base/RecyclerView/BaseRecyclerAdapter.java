@@ -3,6 +3,7 @@ package net.liang.appbaselibrary.base.RecyclerView;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,6 +105,12 @@ public abstract class BaseRecyclerAdapter<T> extends BaseQuickAdapter<T, Binding
         loadMoreEnd();
     }
 
+    @Override
+    public void setNewData(List<T> data) {
+        super.setNewData(data);
+        disableLoadMoreIfNotFullPage(recyclerView);
+    }
+
     /**
      * 多页面数据
      */
@@ -133,7 +140,22 @@ public abstract class BaseRecyclerAdapter<T> extends BaseQuickAdapter<T, Binding
     private boolean isEmptyView(View view) {
         return getEmptyView() != view;
     }
-
+    public void disableLoadMoreIfNotFullPage(RecyclerView recyclerView) {
+        if (recyclerView == null) return;
+        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+        if (manager == null) return;
+        if (manager instanceof LinearLayoutManager) {
+            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) manager;
+            recyclerView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if ((linearLayoutManager.findLastCompletelyVisibleItemPosition() + 1) == getItemCount()) {
+                        setEnableLoadMore(false);
+                    }
+                }
+            }, 50);
+        }
+    }
     @Override
     protected View getItemView(int layoutResId, ViewGroup parent) {
         ViewDataBinding binding = DataBindingUtil.inflate(mLayoutInflater, layoutResId, parent, false);
