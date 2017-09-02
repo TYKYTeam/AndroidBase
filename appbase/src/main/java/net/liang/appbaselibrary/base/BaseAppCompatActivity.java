@@ -1,8 +1,6 @@
 package net.liang.appbaselibrary.base;
 
-import android.app.AlertDialog;
 import android.content.ComponentName;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -296,22 +294,11 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity implements
                     break;
             }
     }
-    //登录超时状态
-    @Subscribe
-    public void
-    onEvent(LoginStatus state) {
-        switch (state){
-            case LOGIN_OUT_OF_DATE:
-                finish();
-                break;
-        }
-    }
+
     private void initNetWorkInfo(boolean isConnect){
         if (view_netInfo != null){
             view_netInfo.setVisibility(isConnect? View.GONE:View.VISIBLE);
         }
     }
-    public enum LoginStatus{
-        LOGIN_OUT_OF_DATE
-    }
+
 }
