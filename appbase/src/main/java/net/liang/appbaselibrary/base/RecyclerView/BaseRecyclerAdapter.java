@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,8 +120,6 @@ public abstract class BaseRecyclerAdapter<T> extends BaseQuickAdapter<T, Binding
             if (pageNo == 1) {
                 setNewData(null);
                 showNoDataView();
-            } else {
-                loadMoreEnd();
             }
             return;
         }
@@ -154,7 +153,32 @@ public abstract class BaseRecyclerAdapter<T> extends BaseQuickAdapter<T, Binding
                     }
                 }
             }, 50);
+        } else if (manager instanceof StaggeredGridLayoutManager) {
+            final StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) manager;
+            recyclerView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    final int[] positions = new int[staggeredGridLayoutManager.getSpanCount()];
+                    staggeredGridLayoutManager.findLastCompletelyVisibleItemPositions(positions);
+                    int pos = getTheBiggestNumber(positions) + 1;
+                    if (pos == getItemCount()) {
+                        setEnableLoadMore(false);
+                    }
+                }
+            }, 50);
         }
+    }
+    private int getTheBiggestNumber(int[] numbers) {
+        int tmp = -1;
+        if (numbers == null || numbers.length == 0) {
+            return tmp;
+        }
+        for (int num : numbers) {
+            if (num > tmp) {
+                tmp = num;
+            }
+        }
+        return tmp;
     }
     @Override
     protected View getItemView(int layoutResId, ViewGroup parent) {
