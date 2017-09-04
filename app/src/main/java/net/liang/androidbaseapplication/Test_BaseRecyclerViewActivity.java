@@ -1,16 +1,15 @@
 package net.liang.androidbaseapplication;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 
+import net.liang.appbaselibrary.base.BindingViewHolder;
 import net.liang.appbaselibrary.base.RecyclerView.BaseRecyclerAdapter;
 import net.liang.appbaselibrary.base.RecyclerView.BaseRecyclerViewActivity;
-import net.liang.appbaselibrary.base.BindingViewHolder;
 import net.liang.appbaselibrary.base.mvp.MvpPresenter;
 import net.liang.appbaselibrary.utils.ToastUtils;
 
@@ -20,7 +19,6 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.Observable;
 
 public class Test_BaseRecyclerViewActivity extends BaseRecyclerViewActivity<List<String>> {
