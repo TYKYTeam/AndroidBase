@@ -28,6 +28,8 @@ public abstract class BaseRecyclerViewFragment<T> extends BaseFragment implement
     protected RecyclerView recyclerView;
     private BaseRecyclerViewContract.Presenter recyclerPresenter;
     protected LinearLayoutManager mLinearLayoutManager;
+    protected boolean refreshEveryTimes = true;
+
     @Override
     public void initRecyclerView() {
         recyclerPresenter = new BaseRecyclerViewPresenter(this,
@@ -57,7 +59,9 @@ public abstract class BaseRecyclerViewFragment<T> extends BaseFragment implement
     @Override
     public void onStart() {
         super.onStart();
-        recyclerPresenter.onListRefresh();
+        if (refreshEveryTimes) {
+            recyclerPresenter.onListRefresh();
+        }
     }
 
     @Override
@@ -80,6 +84,16 @@ public abstract class BaseRecyclerViewFragment<T> extends BaseFragment implement
     public void onPause() {
         super.onPause();
         recyclerPresenter.unSubscribe();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        refreshEveryTimes = isRefreshEvertTimes();
+    }
+
+    public boolean isRefreshEvertTimes() {
+        return true;
     }
 
     @Override
