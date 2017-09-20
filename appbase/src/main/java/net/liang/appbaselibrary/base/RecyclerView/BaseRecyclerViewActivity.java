@@ -28,6 +28,9 @@ public abstract class BaseRecyclerViewActivity<T> extends BaseAppCompatActivity 
     protected RecyclerView                       recyclerView;
     private   BaseRecyclerViewContract.Presenter recyclerPresenter;
     protected GridLayoutManager                  mLinearLayoutManager;
+
+    protected boolean refreshEveryTimes = true;
+
     @Override
     public void initRecyclerView() {
         recyclerPresenter = new BaseRecyclerViewPresenter(this,
@@ -51,7 +54,9 @@ public abstract class BaseRecyclerViewActivity<T> extends BaseAppCompatActivity 
     @Override
     protected void onStart() {
         super.onStart();
-        recyclerPresenter.onListRefresh();
+        if (refreshEveryTimes) {
+            recyclerPresenter.onListRefresh();
+        }
     }
 
     @Override
@@ -79,6 +84,16 @@ public abstract class BaseRecyclerViewActivity<T> extends BaseAppCompatActivity 
     public void onPause() {
         super.onPause();
         recyclerPresenter.unSubscribe();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        refreshEveryTimes = isRefreshEvertTimes();
+    }
+
+    public boolean isRefreshEvertTimes() {
+        return true;
     }
 
     @Override
