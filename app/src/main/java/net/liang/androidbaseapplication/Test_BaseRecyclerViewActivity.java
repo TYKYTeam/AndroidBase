@@ -76,7 +76,8 @@ public class Test_BaseRecyclerViewActivity extends BaseRecyclerViewActivity<List
         //adapter.showList(strings);
 
         //多页使用
-        adapter.showList(strings, pageNo);
+        List<String> myStrings  = strings.subList(0,5);
+        adapter.showList(myStrings);
     }
 
 
