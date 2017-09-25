@@ -2,7 +2,7 @@ package net.liang.appbaselibrary.base.RecyclerView;
 
 import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -23,11 +23,11 @@ import net.liang.appbaselibrary.data.local.LocalRecyclerDataSource;
 
 public abstract class BaseRecyclerViewActivity<T> extends BaseAppCompatActivity implements BaseRecyclerViewContract.View<T>, RecyclerDataSource<T>, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener, View.OnClickListener {
 
-    protected BaseRecyclerAdapter                adapter;
-    protected SwipeRefreshLayout                 swipeRefresh;
-    protected RecyclerView                       recyclerView;
-    private   BaseRecyclerViewContract.Presenter recyclerPresenter;
-    protected GridLayoutManager                  mLinearLayoutManager;
+    protected BaseRecyclerAdapter adapter;
+    protected SwipeRefreshLayout swipeRefresh;
+    protected RecyclerView recyclerView;
+    private BaseRecyclerViewContract.Presenter recyclerPresenter;
+    protected LinearLayoutManager mLinearLayoutManager;
 
     protected boolean refreshEveryTimes = true;
 
@@ -43,7 +43,7 @@ public abstract class BaseRecyclerViewActivity<T> extends BaseAppCompatActivity 
 
         swipeRefresh.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW);
         swipeRefresh.setOnRefreshListener(this);
-        mLinearLayoutManager = new GridLayoutManager(this,2);
+        mLinearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLinearLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
