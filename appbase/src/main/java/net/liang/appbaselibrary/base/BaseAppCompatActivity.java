@@ -129,7 +129,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity implements
         if (NetworkUtils.isConnected(getBaseContext())){
             showToast("加载失败!");
         }else {
-            showToast("网咯不给力，请检查网络设置!");
+            showToast("网络不给力，请检查网络设置!");
         }
     }
 
